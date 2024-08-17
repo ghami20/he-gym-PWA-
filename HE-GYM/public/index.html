@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoja de Ejercicios del Gimnasio</title>
     <style>
-        /* Estilos aquí */
+        /* Estilos básicos */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -36,87 +36,60 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        .btn, #titulo {
+        .btn {
             padding: 10px 15px;
             background-color: #28a745;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
-        }
-        .btn.download {
-            background-color: #007bff;
-        }
-        @media print {
-            .btn, #titulo, #download {
-                display: none;
-            }
-            .exercise img {
-                max-width: 150px;
-            }
         }
     </style>
-    <script type="module">
-        import { db, collection, getDocs } from './firebase-config.js';
+</head>
+<body>
+    <h1>Hoja de Ejercicios del Gimnasio</h1>
+    <button class="btn" onclick="window.location.href='create-exercise.html'">Agregar Ejercicio</button>
+    <div id="exercise-list" class="exercise-list">
+        <!-- Los ejercicios se agregarán aquí -->
+    </div>
 
-        async function loadExercises() {
+    <script>
+        function loadExercises() {
             const exerciseList = document.getElementById('exercise-list');
-            const querySnapshot = await getDocs(collection(db, 'exercises'));
-            querySnapshot.forEach(doc => {
-                const exercise = doc.data();
+            const exercises = JSON.parse(localStorage.getItem('exercises')) || [];
+
+            exercises.forEach(exercise => {
                 const exerciseDiv = document.createElement('div');
                 exerciseDiv.className = 'exercise';
+
                 const img = document.createElement('img');
                 img.src = exercise.image;
                 img.alt = 'Ejercicio';
+
                 const exerciseInfo = document.createElement('div');
                 exerciseInfo.className = 'exercise-info';
+
                 const nameLabel = document.createElement('label');
                 nameLabel.innerText = `Ejercicio: ${exercise.name}`;
+
                 const repsLabel = document.createElement('label');
                 repsLabel.innerText = `Repeticiones: ${exercise.reps}`;
+
                 const notesLabel = document.createElement('label');
                 notesLabel.innerText = `Anotaciones: ${exercise.notes}`;
+
                 exerciseInfo.appendChild(nameLabel);
                 exerciseInfo.appendChild(repsLabel);
                 exerciseInfo.appendChild(notesLabel);
+
                 exerciseDiv.appendChild(img);
                 exerciseDiv.appendChild(exerciseInfo);
+
                 exerciseList.appendChild(exerciseDiv);
             });
         }
 
-        function imprimir() {
-            const titulo = document.getElementById('titulo').value;
-            document.title = titulo;
-            window.print();
-        }
-
-        function descargar() {
-            const exercises = document.querySelectorAll('.exercise-info label');
-            let content = '';
-            exercises.forEach(label => {
-                content += label.innerText + '\n';
-            });
-            const blob = new Blob([content], { type: 'text/plain' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'ejercicios.txt';
-            link.click();
-        }
-
         document.addEventListener('DOMContentLoaded', loadExercises);
     </script>
-</head>
-<body>
-    <a href="create-exercise.html">Crear Nuevo Ejercicio</a>
-    <h1>Hoja de Ejercicios del Gimnasio</h1>
-    <input type="text" id="titulo" placeholder="Título del archivo">
-    <div id="exercise-list" class="exercise-list">
-        <!-- Los ejercicios se agregarán aquí -->
-    </div>
-    <button class="btn" onclick="imprimir()">Imprimir Hoja</button>
-    <button class="btn download" id="download" onclick="descargar()">Descargar Información</button>
 </body>
 </html>

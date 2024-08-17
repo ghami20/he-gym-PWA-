@@ -5,58 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Ejercicio</title>
     <style>
+        /* Estilos básicos */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        .container {
-            max-width: 600px;
-            margin: auto;
+        .form-group {
+            margin-bottom: 15px;
         }
-        input, textarea, button {
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group textarea {
             width: 100%;
-            margin-bottom: 10px;
-            padding: 10px;
+            padding: 8px;
             box-sizing: border-box;
         }
+        .btn {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
-    <script type="module">
-        import { db, collection, addDoc } from './firebase-config.js';
+</head>
+<body>
+    <h1>Crear Ejercicio</h1>
+    
+    <div class="form-group">
+        <label for="name">Nombre del Ejercicio:</label>
+        <input type="text" id="name" placeholder="Nombre del Ejercicio">
+    </div>
+    <div class="form-group">
+        <label for="reps">Repeticiones:</label>
+        <input type="number" id="reps" placeholder="Cantidad de Repeticiones">
+    </div>
+    <div class="form-group">
+        <label for="notes">Anotaciones:</label>
+        <textarea id="notes" placeholder="Anotaciones"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="image">Imagen del Ejercicio:</label>
+        <input type="file" id="image" accept="image/*">
+    </div>
+    
+    <button class="btn" onclick="saveExercise()">Guardar Ejercicio</button>
 
-        async function saveExercise() {
+    <script>
+        function saveExercise() {
             const name = document.getElementById('name').value;
             const reps = document.getElementById('reps').value;
             const notes = document.getElementById('notes').value;
-            const img = document.getElementById('img').files[0];
-            const imgURL = URL.createObjectURL(img);
+            const image = document.getElementById('image').files[0];
 
-            try {
-                await addDoc(collection(db, 'exercises'), {
+            if (!name || !reps || !image) {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                const exercises = JSON.parse(localStorage.getItem('exercises')) || [];
+                exercises.push({
                     name: name,
                     reps: reps,
                     notes: notes,
-                    image: imgURL
+                    image: reader.result
                 });
-                alert('Ejercicio guardado exitosamente');
-                document.getElementById('exercise-form').reset();
-            } catch (error) {
-                console.error('Error al guardar el ejercicio:', error);
-                alert('Error al guardar el ejercicio');
-            }
+                localStorage.setItem('exercises', JSON.stringify(exercises));
+                alert('Ejercicio guardado con éxito');
+                window.location.href = 'index.html'; // Redirige a la página principal
+            };
+            reader.readAsDataURL(image);
         }
     </script>
-</head>
-<body>
-    <div class="container">
-        <a href="index.html">Ver rutina</a>
-        <h1>Crear Ejercicio</h1>
-        <form id="exercise-form">
-            <input type="text" id="name" placeholder="Nombre del Ejercicio" required>
-            <input type="number" id="reps" placeholder="Cantidad de Repeticiones" required>
-            <textarea id="notes" placeholder="Anotaciones" required></textarea>
-            <input type="file" id="img" accept="image/*" required>
-            <button type="button" onclick="saveExercise()">Guardar Ejercicio</button>
-        </form>
-    </div>
 </body>
 </html>
