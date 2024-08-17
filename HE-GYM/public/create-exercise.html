@@ -30,6 +30,19 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .image-select {
+            display: flex;
+            gap: 10px;
+        }
+        .image-select img {
+            width: 100px;
+            height: auto;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .image-select img.selected {
+            border-color: #007bff;
+        }
     </style>
 </head>
 <body>
@@ -48,39 +61,69 @@
         <textarea id="notes" placeholder="Anotaciones"></textarea>
     </div>
     <div class="form-group">
-        <label for="image">Imagen del Ejercicio:</label>
-        <input type="file" id="image" accept="image/*">
+        <label>Selecciona Imagen del Ejercicio:</label>
+        <div class="image-select" id="image-select">
+            <!-- Las imágenes predefinidas se agregarán aquí -->
+        </div>
     </div>
     
     <button class="btn" onclick="saveExercise()">Guardar Ejercicio</button>
 
     <script>
+        // Lista de URLs de imágenes predefinidas
+        const imageUrls = [
+            'images/exercise1.jpg',
+            'images/exercise2.jpg',
+            'images/exercise3.jpg'
+        ];
+
+        // Función para cargar imágenes en la página
+        function loadImages() {
+            const imageSelect = document.getElementById('image-select');
+            imageUrls.forEach(url => {
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = 'Imagen de Ejercicio';
+                img.addEventListener('click', () => selectImage(img));
+                imageSelect.appendChild(img);
+            });
+        }
+
+        let selectedImage = null;
+
+        // Función para seleccionar una imagen
+        function selectImage(img) {
+            document.querySelectorAll('.image-select img').forEach(image => {
+                image.classList.remove('selected');
+            });
+            img.classList.add('selected');
+            selectedImage = img.src;
+        }
+
         function saveExercise() {
             const name = document.getElementById('name').value;
             const reps = document.getElementById('reps').value;
             const notes = document.getElementById('notes').value;
-            const image = document.getElementById('image').files[0];
 
-            if (!name || !reps || !image) {
-                alert('Por favor, completa todos los campos.');
+            if (!name || !reps || !selectedImage) {
+                alert('Por favor, completa todos los campos y selecciona una imagen.');
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onloadend = function() {
-                const exercises = JSON.parse(localStorage.getItem('exercises')) || [];
-                exercises.push({
-                    name: name,
-                    reps: reps,
-                    notes: notes,
-                    image: reader.result
-                });
-                localStorage.setItem('exercises', JSON.stringify(exercises));
-                alert('Ejercicio guardado con éxito');
-                window.location.href = 'index.html'; // Redirige a la página principal
-            };
-            reader.readAsDataURL(image);
+            const exercises = JSON.parse(localStorage.getItem('exercises')) || [];
+            exercises.push({
+                name: name,
+                reps: reps,
+                notes: notes,
+                image: selectedImage
+            });
+            localStorage.setItem('exercises', JSON.stringify(exercises));
+            alert('Ejercicio guardado con éxito');
+            window.location.href = 'index.html'; // Redirige a la página principal
         }
+
+        // Cargar imágenes cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', loadImages);
     </script>
 </body>
 </html>
