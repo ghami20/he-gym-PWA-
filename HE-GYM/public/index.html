@@ -3,41 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rutina de ejercicios</title>
+    <title>Hoja de Ejercicios del Gimnasio</title>
     <style>
         /* Estilos aquí */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .exercise-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .exercise {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .exercise img {
+            max-width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .exercise-info {
+            text-align: center;
+        }
+        .exercise-info label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .btn, #titulo {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn.download {
+            background-color: #007bff;
+        }
+        @media print {
+            .btn, #titulo, #download {
+                display: none;
+            }
+            .exercise img {
+                max-width: 150px;
+            }
+        }
     </style>
     <script type="module">
-        import { db, collection, addDoc, getDocs } from './firebase-config.js';
+        import { db, collection, getDocs } from './firebase-config.js';
 
-        // Función para agregar ejercicios
-        async function addExercise() {
-            const exerciseList = document.getElementById('exercise-list');
-            // Código para agregar ejercicios
-        }
-
-        // Función para imprimir la hoja
-        function imprimir() {
-            const titulo = document.getElementById('titulo').value;
-            document.title = titulo;
-            window.print();
-        }
-
-        // Función para descargar la información
-        function descargar() {
-            const exercises = document.querySelectorAll('.exercise-info label');
-            let content = '';
-            exercises.forEach(label => {
-                content += label.innerText + '\n';
-            });
-            const blob = new Blob([content], { type: 'text/plain' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'ejercicios.txt';
-            link.click();
-        }
-
-        // Función para cargar ejercicios desde Firestore
         async function loadExercises() {
             const exerciseList = document.getElementById('exercise-list');
             const querySnapshot = await getDocs(collection(db, 'exercises'));
@@ -65,19 +87,34 @@
             });
         }
 
-        // Cargar ejercicios al iniciar la página
+        function imprimir() {
+            const titulo = document.getElementById('titulo').value;
+            document.title = titulo;
+            window.print();
+        }
+
+        function descargar() {
+            const exercises = document.querySelectorAll('.exercise-info label');
+            let content = '';
+            exercises.forEach(label => {
+                content += label.innerText + '\n';
+            });
+            const blob = new Blob([content], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'ejercicios.txt';
+            link.click();
+        }
+
         document.addEventListener('DOMContentLoaded', loadExercises);
     </script>
 </head>
 <body>
-    <h1>Rutina de ejercicios</h1>
-    
+    <h1>Hoja de Ejercicios del Gimnasio</h1>
     <input type="text" id="titulo" placeholder="Título del archivo">
     <div id="exercise-list" class="exercise-list">
         <!-- Los ejercicios se agregarán aquí -->
     </div>
-
-    <button class="btn" onclick="addExercise()">Agregar Ejercicio</button>
     <button class="btn" onclick="imprimir()">Imprimir Hoja</button>
     <button class="btn download" id="download" onclick="descargar()">Descargar Información</button>
 </body>
