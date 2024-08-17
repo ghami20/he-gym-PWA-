@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HE / GYM </title>
+    <title>Hoja de Ejercicios del Gimnasio</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,34 +57,11 @@
         }
     </style>
     <link rel="manifest" href="manifest.json">
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(() => console.log('Service Worker registrado con éxito.'))
-          .catch(error => console.log('Error al registrar el Service Worker:', error));
-      }
-    </script>
-    
-</head>
-<body>
-    <h1>HE / GYM </h1>
-    
-    <input type="text" id="titulo" placeholder="Título del archivo">
-    <div id="exercise-list" class="exercise-list">
-        <!-- Los ejercicios se agregarán aquí -->
-    </div>
-
-    <button class="btn" onclick="addExercise()">Agregar Ejercicio</button>
-    <button class="btn" onclick="imprimir()">Imprimir Hoja</button>
-    <button class="btn download" id="download" onclick="descargar()">Descargar Información</button>
     <script type="module">
-        import { db } from './firebase-config.js';
-        // Aquí puedes empezar a usar la base de datos de Firebase
-    </script>
-    <script>
-        const isAdmin = true; // Cambiar a false si no es admin
+        import { db, collection, addDoc, getDocs } from './firebase-config.js';
 
-        function addExercise() {
+        // Función para agregar ejercicios
+        async function addExercise() {
             const exerciseList = document.getElementById('exercise-list');
 
             const exerciseDiv = document.createElement('div');
@@ -123,45 +100,40 @@
             const saveBtn = document.createElement('button');
             saveBtn.innerText = 'Guardar';
             saveBtn.className = 'btn';
-            saveBtn.onclick = function() {
-                const nameLabel = document.createElement('label');
-                nameLabel.innerText = `Ejercicio: ${nameInput.value}`;
+            saveBtn.onclick = async function() {
+                const exerciseData = {
+                    name: nameInput.value,
+                    reps: repsInput.value,
+                    notes: notesInput.value,
+                    image: img.src
+                };
 
-                const repsLabel = document.createElement('label');
-                repsLabel.innerText = `Repeticiones: ${repsInput.value}`;
+                try {
+                    await addDoc(collection(db, 'exercises'), exerciseData);
+                    alert('Ejercicio guardado con éxito');
 
-                const notesLabel = document.createElement('label');
-                notesLabel.innerText = `Anotaciones: ${notesInput.value}`;
+                    const nameLabel = document.createElement('label');
+                    nameLabel.innerText = `Ejercicio: ${nameInput.value}`;
 
-                exerciseInfo.innerHTML = ''; // Limpiar el contenedor
-                exerciseInfo.appendChild(nameLabel);
-                exerciseInfo.appendChild(repsLabel);
-                exerciseInfo.appendChild(notesLabel);
+                    const repsLabel = document.createElement('label');
+                    repsLabel.innerText = `Repeticiones: ${repsInput.value}`;
 
-                if (isAdmin) {
-                    const editBtn = document.createElement('button');
-                    editBtn.innerText = 'Editar';
-                    editBtn.className = 'btn';
-                    editBtn.onclick = function() {
-                        // Lógica para editar el ejercicio
-                    };
+                    const notesLabel = document.createElement('label');
+                    notesLabel.innerText = `Anotaciones: ${notesInput.value}`;
 
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.innerText = 'Eliminar';
-                    deleteBtn.className = 'btn';
-                    deleteBtn.onclick = function() {
-                        exerciseDiv.remove();
-                    };
+                    exerciseInfo.innerHTML = ''; // Limpiar el contenedor
+                    exerciseInfo.appendChild(nameLabel);
+                    exerciseInfo.appendChild(repsLabel);
+                    exerciseInfo.appendChild(notesLabel);
 
-                    exerciseInfo.appendChild(editBtn);
-                    exerciseInfo.appendChild(deleteBtn);
+                    imgInput.remove();
+                    nameInput.remove();
+                    repsInput.remove();
+                    notesInput.remove();
+                    saveBtn.remove();
+                } catch (error) {
+                    console.error('Error al guardar el ejercicio: ', error);
                 }
-
-                imgInput.remove();
-                nameInput.remove();
-                repsInput.remove();
-                notesInput.remove();
-                saveBtn.remove();
             };
 
             exerciseInfo.appendChild(nameInput);
@@ -176,12 +148,14 @@
             exerciseList.appendChild(exerciseDiv);
         }
 
+        // Función para imprimir la hoja
         function imprimir() {
             const titulo = document.getElementById('titulo').value;
             document.title = titulo;
             window.print();
         }
 
+        // Función para descargar la información
         function descargar() {
             const exercises = document.querySelectorAll('.exercise-info label');
             let content = '';
@@ -196,6 +170,58 @@
             link.download = 'ejercicios.txt';
             link.click();
         }
+
+        // Función para cargar ejercicios desde Firestore
+        async function loadExercises() {
+            const exerciseList = document.getElementById('exercise-list');
+            const querySnapshot = await getDocs(collection(db, 'exercises'));
+
+            querySnapshot.forEach(doc => {
+                const exercise = doc.data();
+                const exerciseDiv = document.createElement('div');
+                exerciseDiv.className = 'exercise';
+
+                const img = document.createElement('img');
+                img.src = exercise.image;
+                img.alt = 'Ejercicio';
+
+                const exerciseInfo = document.createElement('div');
+                exerciseInfo.className = 'exercise-info';
+
+                const nameLabel = document.createElement('label');
+                nameLabel.innerText = `Ejercicio: ${exercise.name}`;
+
+                const repsLabel = document.createElement('label');
+                repsLabel.innerText = `Repeticiones: ${exercise.reps}`;
+
+                const notesLabel = document.createElement('label');
+                notesLabel.innerText = `Anotaciones: ${exercise.notes}`;
+
+                exerciseInfo.appendChild(nameLabel);
+                exerciseInfo.appendChild(repsLabel);
+                exerciseInfo.appendChild(notesLabel);
+
+                exerciseDiv.appendChild(img);
+                exerciseDiv.appendChild(exerciseInfo);
+
+                exerciseList.appendChild(exerciseDiv);
+            });
+        }
+
+        // Cargar ejercicios al iniciar la página
+        document.addEventListener('DOMContentLoaded', loadExercises);
     </script>
+</head>
+<body>
+    <h1>Hoja de Ejercicios del Gimnasio</h1>
+    
+    <input type="text" id="titulo" placeholder="Título del archivo">
+    <div id="exercise-list" class="exercise-list">
+        <!-- Los ejercicios se agregarán aquí -->
+    </div>
+
+    <button class="btn" onclick="addExercise()">Agregar Ejercicio</button>
+    <button class="btn" onclick="imprimir()">Imprimir Hoja</button>
+    <button class="btn download" id="download" onclick="descargar()">Descargar Información</button>
 </body>
 </html>
