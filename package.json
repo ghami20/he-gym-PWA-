@@ -6,7 +6,9 @@
   "scripts": {
     "start": "serve ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "firebase": "^10.13.0"
+  },
   "devDependencies": {
     "serve": "^14.0.1"
   }
