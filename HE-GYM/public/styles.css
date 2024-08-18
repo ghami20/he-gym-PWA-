@@ -1,0 +1,143 @@
+/* Reset básico para eliminar márgenes y paddings predeterminados */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo global del body */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 10px;
+}
+
+/* Estilos para el contenedor principal */
+#container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para los títulos */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #007BFF; /* Color azul */
+}
+
+/* Estilos para los labels e inputs */
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Estilos para los botones */
+button ,a{
+    text-decoration: none;
+    background-color: #007BFF; /* Color azul */
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3; /* Azul más oscuro */
+}
+
+/* Estilos para los filtros y listados */
+#filter-container {
+    margin-bottom: 20px;
+}
+
+#exercise-list,
+#routine-list {
+    margin-top: 20px;
+}
+
+.exercise,
+.routine-exercise {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.exercise img,
+.routine-exercise img {
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+    border-radius: 4px;
+}
+
+.exercise div,
+.routine-exercise div {
+    flex: 1;
+}
+
+.exercise button,
+.routine-exercise button {
+    background-color: #dc3545; /* Color rojo */
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.exercise button:hover,
+.routine-exercise button:hover {
+    background-color: #c82333; /* Rojo más oscuro */
+}
+
+/* Estilo para elementos de error o advertencia */
+.alert {
+    color: #dc3545; /* Color rojo */
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    body {
+        padding: 5px;
+    }
+
+    #container {
+        padding: 10px;
+    }
+
+    button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        font-size: 14px;
+    }
+}

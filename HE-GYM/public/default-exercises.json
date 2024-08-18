@@ -1,0 +1,86 @@
+[
+    {
+        "name": "Sentadillas",
+        "reps": 15,
+        "notes": "Mantén la espalda recta.",
+        "image": "images/sentadillas.webp"
+    },
+    {
+        "name": "Flexiones",
+        "reps": 20,
+        "notes": "Baja hasta que el pecho toque el suelo.",
+        "image": "images/flexiones.webp"
+    },
+    {
+        "name": "Plancha",
+        "reps": 1,
+        "notes": "Mantén la posición durante 1 minuto.",
+        "image": "images/plancha.png"
+    },
+    {
+        "name": "Peso Muerto con Mancuernas",
+        "reps": 12,
+        "notes": "Mantén la espalda recta y las rodillas ligeramente flexionadas.",
+        "image": "images/pesomuerto.webp"
+    },
+   
+    {
+        "name": "Remo con Mancuernas",
+        "reps": 12,
+        "notes": "Inclínate hacia adelante y lleva las mancuernas hacia el abdomen.",
+        "image": "images/remo.webp"
+    },
+    {
+        "name": "Zancadas",
+        "reps": 12,
+        "notes": "Da un paso adelante y baja la rodilla trasera hasta casi tocar el suelo.",
+        "image": "images/estocadas.jpeg"
+    },
+    {
+        "name": "Press Militar con Mancuernas",
+        "reps": 12,
+        "notes": "Empuja las mancuernas por encima de la cabeza hasta que los brazos estén extendidos.",
+        "image": "images/presmilitar.webp"
+    },
+    {
+        "name": "Abdominales",
+        "reps": 20,
+        "notes": "Mantén el core contraído y no tires del cuello.",
+        "image": "images/abdominales.png"
+    },
+    {
+        "name": "Curl Martillo",
+        "reps": 15,
+        "notes": "Levanta las mancuernas hacia los hombros sin mover los codos.",
+        "image": "images/martillo.webp"
+    },
+    {
+        "name": "Elevaciones Laterales con Mancuernas",
+        "reps": 15,
+        "notes": "Levanta las mancuernas hacia los lados hasta la altura de los hombros.",
+        "image": "images/vuelos.webp"
+    },
+   
+    
+    {
+        "name": "Press de Tríceps con Mancuernas",
+        "reps": 15,
+        "notes": "Levanta las mancuernas por encima de la cabeza y extiende los brazos.",
+        "image": "images/presstriceps.webp"
+    },
+  
+    {
+        "name": "Elevaciones de Talones",
+        "reps": 20,
+        "notes": "Levanta los talones manteniendo la posición de puntillas.",
+        "image": "images/talones.jpg"
+    },
+    {
+        "name": "Patada de Tríceps con Mancuernas",
+        "reps": 15,
+        "notes": "Extiende el brazo hacia atrás mientras mantienes el torso inclinado.",
+        "image": "images/triceps.jpg"
+    }
+    
+  ]
+  

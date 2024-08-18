@@ -3,93 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HE / GYM</title>
-    <style>
-        /* Estilos básicos */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .exercise-list {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .exercise {
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .exercise img {
-            max-width: 100px;
-            height: auto;
-            margin-bottom: 10px;
-        }
-        .exercise-info {
-            text-align: center;
-        }
-        .exercise-info label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .btn {
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+    <title>Rutinas</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Hoja de Ejercicios del Gimnasio</h1>
-    <button class="btn" onclick="window.location.href='create-exercise.html'">Agregar Ejercicio</button>
-    <div id="exercise-list" class="exercise-list">
-        <!-- Los ejercicios se agregarán aquí -->
+    <h1>Rutinas Guardadas</h1>
+    <a href="admin.html">crear rutina</a>
+    <div>
+        <label for="routine-select">Selecciona una rutina:</label>
+        <select id="routine-select">
+            <!-- Opciones de rutinas cargadas aquí -->
+        </select>
     </div>
 
-    <script>
-        function loadExercises() {
-            const exerciseList = document.getElementById('exercise-list');
-            const exercises = JSON.parse(localStorage.getItem('exercises')) || [];
+    <div id="routine-details">
+        <!-- Detalles de la rutina seleccionada aquí -->
+    </div>
 
-            exercises.forEach(exercise => {
-                const exerciseDiv = document.createElement('div');
-                exerciseDiv.className = 'exercise';
-
-                const img = document.createElement('img');
-                img.src = exercise.image;
-                img.alt = 'Ejercicio';
-
-                const exerciseInfo = document.createElement('div');
-                exerciseInfo.className = 'exercise-info';
-
-                const nameLabel = document.createElement('label');
-                nameLabel.innerText = `Ejercicio: ${exercise.name}`;
-
-                const repsLabel = document.createElement('label');
-                repsLabel.innerText = `Repeticiones: ${exercise.reps}`;
-
-                const notesLabel = document.createElement('label');
-                notesLabel.innerText = `Anotaciones: ${exercise.notes}`;
-
-                exerciseInfo.appendChild(nameLabel);
-                exerciseInfo.appendChild(repsLabel);
-                exerciseInfo.appendChild(notesLabel);
-
-                exerciseDiv.appendChild(img);
-                exerciseDiv.appendChild(exerciseInfo);
-
-                exerciseList.appendChild(exerciseDiv);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', loadExercises);
-    </script>
+    <script type="module" src="js/index.js"></script>
 </body>
 </html>
