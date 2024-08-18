@@ -1,49 +1,29 @@
-// Función para cargar las rutinas guardadas
-function loadRoutines() {
-    const routineSelect = document.getElementById('routine-select');
-    const routines = JSON.parse(localStorage.getItem('routines')) || {};
+import { loadRoutines, displayRoutine } from './data.js';
 
-    routineSelect.innerHTML = '<option value="">Selecciona una rutina</option>'; // Limpiar opciones
-
-    Object.keys(routines).forEach(routineName => {
-        const option = document.createElement('option');
-        option.value = routineName;
-        option.textContent = routineName;
-        routineSelect.appendChild(option);
-    });
-}
-
-// Función para mostrar los detalles de la rutina seleccionada
-function showRoutineDetails() {
-    const routineName = document.getElementById('routine-select').value;
+document.addEventListener('DOMContentLoaded', async () => {
+    const routineSelector = document.getElementById('routine-selector');
+    const loadRoutineButton = document.getElementById('load-routine-button');
     const routineDetails = document.getElementById('routine-details');
-    routineDetails.innerHTML = ''; // Limpiar detalles
 
-    if (routineName) {
-        const routines = JSON.parse(localStorage.getItem('routines')) || {};
-        const routine = routines[routineName];
+    // Cargar rutinas y llenar el selector
+    const routines = await loadRoutines();
+    routines.forEach(routine => {
+        const option = document.createElement('option');
+        option.value = routine.name;
+        option.textContent = routine.name;
+        routineSelector.appendChild(option);
+    });
 
-        routine.forEach(exercise => {
-            const div = document.createElement('div');
-            div.className = 'routine-exercise';
-            div.innerHTML = `
-                <img src="${exercise.image}" alt="${exercise.name}">
-                <div>
-                    <label>Ejercicio: ${exercise.name}</label><br>
-                    <label>Repeticiones: ${exercise.reps}</label><br>
-                    <label>Series: ${exercise.series || ''}</label><br>
-                    <label>Peso: ${exercise.weight || ''}</label><br>
-                    <label>Anotaciones: ${exercise.notes || ''}</label>
-                </div>
-            `;
-            routineDetails.appendChild(div);
-        });
-    }
-}
-
-// Inicializa eventos y carga datos al cargar el documento
-document.addEventListener('DOMContentLoaded', () => {
-    loadRoutines();
-
-    document.getElementById('routine-select').addEventListener('change', showRoutineDetails);
+    // Evento para cargar la rutina seleccionada
+    loadRoutineButton.addEventListener('click', () => {
+        const selectedRoutineName = routineSelector.value;
+        if (selectedRoutineName) {
+            const routine = routines.find(r => r.name === selectedRoutineName);
+            if (routine) {
+                displayRoutine(routine, routineDetails);
+            }
+        } else {
+            routineDetails.innerHTML = '<p>Por favor, selecciona una rutina.</p>';
+        }
+    });
 });

@@ -4,55 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrar Rutinas</title>
-    <style>
-        .container {
-            display: flex;
-            justify-content: space-between;
-        }
-        .column {
-            width: 45%;
-        }
-        #filter {
-            margin-bottom: 10px;
-        }
-        .exercise, .routine-exercise {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .exercise img, .routine-exercise img {
-            max-width: 100px;
-            height: auto;
-        }
-    </style>
-    <script type="module" src="js/admin.js" defer></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <a href="index.html">Ver rutinas</a>
-    <h1>Administrar Rutinas</h1>
-    <div>
-        <label for="routine-name">Nombre de la rutina:</label>
+    <div id="container">
+        <a href="index.html">Ver rutinas</a>
+        <h1>Administrar Rutinas</h1>
         <input type="text" id="routine-name" placeholder="Nombre de la rutina">
+        <div id="filter-container">
+            <label for="muscle-group">Filtrar por grupo muscular:</label>
+            <select id="muscle-group">
+                <option value="">Todos</option>
+                <option value="Pecho">Pecho</option>
+                <option value="Espalda">Espalda</option>
+                <option value="Piernas">Piernas</option>
+                <option value="Core">Core</option>
+                <option value="Hombros">Hombros</option>
+                <option value="Tríceps">Tríceps</option>
+                <option value="Bíceps">Bíceps</option>
+            </select>
+        </div>
+        <div id="columns-container">
+            <div id="exercise-column">
+                <h2>Ejercicios Disponibles</h2>
+                <div id="exercise-list"></div>
+            </div>
+            <div id="routine-column">
+                <h2>Ejercicios en la Rutina</h2>
+                <div id="routine-list"></div>
+            </div>
+        </div>
         <button id="save-routine-button">Guardar Rutina</button>
     </div>
-    <label for="muscle-group">Selecciona grupo muscular:</label>
-    <select id="muscle-group">
-        <option value="">Todos</option>
-        <option value="Piernas">Piernas</option>
-        <option value="Pecho">Pecho</option>
-        <option value="Espalda">Espalda</option>
-        <option value="Hombros">Hombros</option>
-        <option value="Brazos">Brazos</option>
-        <option value="Abdomen">Abdomen</option>
-    </select>
-    <div class="container">
-        <div class="column" id="exercise-list">
-            <h2>Ejercicios Disponibles</h2>
-        </div>
-        <div class="column" id="routine-list">
-            <h2>Rutina</h2>
-        </div>
-    </div>
+    <script src="js/admin.js" type="module"></script>
 </body>
 </html>

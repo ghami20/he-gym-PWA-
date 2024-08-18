@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rutinas</title>
+    <title>Ver Rutinas</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#007bff">
+    
 </head>
 <body>
-    <h1>Rutinas Guardadas</h1>
-    <a href="admin.html">crear rutina</a>
-    <div>
-        <label for="routine-select">Selecciona una rutina:</label>
-        <select id="routine-select">
-            <!-- Opciones de rutinas cargadas aquí -->
-        </select>
+    <div id="container">
+        <a href="admin.html">Administrar rutinas</a>
+        <h1>Ver Rutinas</h1>
+        <div id="select-routine-container">
+            <label for="routine-selector">Selecciona una rutina:</label>
+            <select id="routine-selector">
+                <option value="">Selecciona una rutina</option>
+            </select>
+            <button id="load-routine-button">Cargar Rutina</button>
+        </div>
+        <div id="routine-details"></div>
     </div>
-
-    <div id="routine-details">
-        <!-- Detalles de la rutina seleccionada aquí -->
-    </div>
-
-    <script type="module" src="js/index.js"></script>
+    <script src="js/index.js" type="module"></script>
 </body>
 </html>
