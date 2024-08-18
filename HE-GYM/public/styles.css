@@ -129,28 +129,7 @@ button:hover {
     margin-right: 15px;
     border-radius: 4px;
     object-fit: cover; /* Mantiene la proporción de la imagen */
-}
-
-.exercise div,
-.routine-exercise div {
-    flex: 1;
-}
-
-.exercise button,
-.routine-exercise button {
-    background-color: #dc3545; /* Color rojo */
-    border: none;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.875rem;
-    margin-left: 10px;
-}
-
-.exercise button:hover,
-.routine-exercise button:hover {
-    background-color: #c82333; /* Rojo más oscuro */
+    max-width: 100%; /* Asegura que la imagen no se desborde */
 }
 
 /* Responsive Design */
@@ -163,6 +142,13 @@ button:hover {
     #exercise-list,
     #routine-list {
         max-height: 300px; /* Ajusta la altura para pantallas más pequeñas */
+    }
+
+    /* Estilo para las imágenes en versión móvil */
+    .exercise img,
+    .routine-exercise img {
+        width: 50px; /* Ajusta el tamaño para pantallas pequeñas */
+        height: 50px;
     }
 
     h1 {
