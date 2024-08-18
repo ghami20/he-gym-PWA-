@@ -53,11 +53,12 @@ h1 {
 #exercise-column,
 #routine-column {
     flex: 1;
-    min-width: 300px; /* Ajusta el ancho mínimo de las columnas */
+    min-width: 0; /* Permite que el ancho se ajuste según el contenido */
     padding: 10px;
     background-color: #f9f9f9;
     border-radius: 8px;
     border: 1px solid #ddd;
+    box-sizing: border-box; /* Incluye padding y border en el tamaño total */
 }
 
 /* Estilos para la lista de ejercicios y rutina */
@@ -68,6 +69,7 @@ h1 {
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
+    box-sizing: border-box; /* Incluye padding y border en el tamaño total */
 }
 
 /* Estilos para los encabezados de columna */
@@ -137,6 +139,11 @@ button:hover {
     #columns-container {
         flex-direction: column;
         gap: 10px;
+    }
+
+    #exercise-column,
+    #routine-column {
+        min-width: 100%; /* Asegura que las columnas ocupen el ancho completo en móvil */
     }
 
     #exercise-list,
