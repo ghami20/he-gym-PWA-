@@ -49,7 +49,7 @@ input[type="number"] {
 }
 
 /* Estilos para los botones */
-button ,a{
+button, a {
     text-decoration: none;
     background-color: #007BFF; /* Color azul */
     color: #fff;
@@ -76,25 +76,31 @@ button:hover {
     margin-top: 20px;
 }
 
+/* Estilos para los elementos de la lista de ejercicios y rutina */
 .exercise,
 .routine-exercise {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     border-bottom: 1px solid #ddd;
-    padding: 10px 0;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
 }
 
 .exercise img,
 .routine-exercise img {
-    width: 60px;
-    height: 60px;
-    margin-right: 15px;
+    width: 100%;
+    max-width: 80px;
+    height: auto;
+    margin-bottom: 10px;
     border-radius: 4px;
 }
 
 .exercise div,
 .routine-exercise div {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .exercise button,
@@ -106,7 +112,7 @@ button:hover {
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
-    margin-left: 10px;
+    margin-top: 10px;
 }
 
 .exercise button:hover,
@@ -139,5 +145,10 @@ button:hover {
     input[type="text"],
     input[type="number"] {
         font-size: 14px;
+    }
+
+    .exercise img,
+    .routine-exercise img {
+        max-width: 60px;
     }
 }
