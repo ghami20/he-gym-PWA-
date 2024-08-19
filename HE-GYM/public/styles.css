@@ -156,3 +156,13 @@ button:hover {
         font-size: 0.875rem;
     }
 }
+/* styles.css */
+
+.exercise-item img,
+.routine-exercise img {
+    max-width: 100%; /* Ajusta el ancho máximo al 100% del contenedor */
+    max-height: 150px; /* Ajusta el alto máximo según tus necesidades */
+    object-fit: cover; /* Asegura que la imagen mantenga su relación de aspecto */
+    display: block; /* Asegura que las imágenes se comporten correctamente en contenedores de bloque */
+    margin-bottom: 1rem; /* Espacio debajo de la imagen */
+}
